@@ -1,0 +1,768 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Shahrukh Auto Care | Denting & Painting</title>
+
+    <meta name="description"
+          content="Car denting, painting and scratch repair enquiry service.">
+
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            background: #0b0d10;
+            color: #fff;
+            min-height: 100vh;
+        }
+
+        .hero {
+            min-height: 310px;
+            padding: 45px 20px 35px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            background:
+                linear-gradient(rgba(0,0,0,.58), rgba(0,0,0,.82)),
+                url("https://images.unsplash.com/photo-1503376780353-7e6692767b70?auto=format&fit=crop&w=1400&q=85")
+                center/cover;
+        }
+
+        .hero-content {
+            max-width: 700px;
+        }
+
+        .badge {
+            display: inline-block;
+            background: rgba(255,255,255,.12);
+            border: 1px solid rgba(255,255,255,.2);
+            padding: 8px 14px;
+            border-radius: 30px;
+            font-size: 13px;
+            margin-bottom: 15px;
+            backdrop-filter: blur(8px);
+        }
+
+        h1 {
+            font-size: clamp(34px, 8vw, 60px);
+            line-height: 1;
+            margin-bottom: 15px;
+            letter-spacing: -1.5px;
+        }
+
+        .hero p {
+            color: #d8d8d8;
+            font-size: 16px;
+            line-height: 1.6;
+        }
+
+        .container {
+            width: min(680px, calc(100% - 28px));
+            margin: -35px auto 40px;
+            position: relative;
+        }
+
+        .card {
+            background: #15181d;
+            border: 1px solid #292e35;
+            border-radius: 22px;
+            padding: 24px;
+            box-shadow: 0 20px 60px rgba(0,0,0,.35);
+        }
+
+        .section-title {
+            font-size: 21px;
+            margin-bottom: 18px;
+        }
+
+        label {
+            display: block;
+            font-size: 14px;
+            font-weight: 600;
+            color: #d9d9d9;
+            margin-bottom: 8px;
+        }
+
+        select,
+        textarea {
+            width: 100%;
+            border: 1px solid #343a42;
+            background: #0f1216;
+            color: white;
+            border-radius: 12px;
+            padding: 14px;
+            font-size: 15px;
+            outline: none;
+            transition: .2s;
+        }
+
+        select:focus,
+        textarea:focus {
+            border-color: #f5f5f5;
+        }
+
+        select {
+            appearance: auto;
+        }
+
+        textarea {
+            min-height: 130px;
+            resize: vertical;
+            line-height: 1.5;
+        }
+
+        .field {
+            margin-bottom: 20px;
+        }
+
+        .services {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
+        }
+
+        .service-btn {
+            border: 1px solid #343a42;
+            background: #101318;
+            color: #ddd;
+            padding: 14px 10px;
+            border-radius: 12px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 600;
+            transition: .2s;
+        }
+
+        .service-btn:hover {
+            border-color: #777;
+        }
+
+        .service-btn.active {
+            background: white;
+            color: #111;
+            border-color: white;
+        }
+
+        .photo-box {
+            border: 1px dashed #444b54;
+            background: #101318;
+            border-radius: 14px;
+            padding: 18px;
+            text-align: center;
+        }
+
+        .photo-box input {
+            width: 100%;
+            color: #bbb;
+            font-size: 13px;
+        }
+
+        #preview {
+            display: none;
+            width: 100%;
+            max-height: 230px;
+            object-fit: cover;
+            margin-top: 15px;
+            border-radius: 12px;
+        }
+
+        .counter {
+            text-align: right;
+            color: #777;
+            font-size: 12px;
+            margin-top: 5px;
+        }
+
+        .submit-btn {
+            width: 100%;
+            border: none;
+            background: #fff;
+            color: #111;
+            padding: 16px;
+            border-radius: 13px;
+            font-size: 16px;
+            font-weight: 700;
+            cursor: pointer;
+            margin-top: 5px;
+            transition: .2s;
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-1px);
+            background: #e9e9e9;
+        }
+
+        .submit-btn:disabled {
+            opacity: .6;
+            cursor: not-allowed;
+        }
+
+        .status {
+            display: none;
+            padding: 14px;
+            border-radius: 12px;
+            margin-bottom: 18px;
+            font-size: 14px;
+            line-height: 1.5;
+        }
+
+        .success {
+            display: block;
+            background: #12351f;
+            border: 1px solid #245e38;
+            color: #b8f5ca;
+        }
+
+        .error {
+            display: block;
+            background: #391619;
+            border: 1px solid #713137;
+            color: #ffb9be;
+        }
+
+        .quick-contact {
+            margin-top: 18px;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+        }
+
+        .contact-btn {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 7px;
+            padding: 13px;
+            border-radius: 12px;
+            border: 1px solid #30353c;
+            background: #101318;
+            color: white;
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        .contact-btn:hover {
+            background: #1c2026;
+        }
+
+        .info {
+            text-align: center;
+            color: #999;
+            font-size: 13px;
+            line-height: 1.6;
+            margin-top: 22px;
+        }
+
+        footer {
+            text-align: center;
+            color: #666;
+            font-size: 12px;
+            padding: 0 20px 30px;
+        }
+
+        @media (max-width: 480px) {
+            .hero {
+                min-height: 280px;
+                padding: 35px 18px 30px;
+            }
+
+            .container {
+                width: calc(100% - 20px);
+                margin-top: -28px;
+            }
+
+            .card {
+                padding: 18px;
+                border-radius: 18px;
+            }
+
+            .services {
+                grid-template-columns: 1fr 1fr;
+            }
+
+            .quick-contact {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<section class="hero">
+    <div class="hero-content">
+        <div class="badge">🚗 Professional Auto Care</div>
+
+        <h1>Shahrukh Auto Care</h1>
+
+        <p>
+            Denting • Painting • Scratch Repair<br>
+            Send us your car details and tell us what needs to be fixed.
+        </p>
+    </div>
+</section>
+
+
+<main class="container">
+
+    <div class="card">
+
+        <h2 class="section-title">Get a Repair Enquiry</h2>
+
+        <div id="status" class="status"></div>
+
+        <!-- CAR -->
+        <div class="field">
+            <label for="carModel">Select Your Car</label>
+
+            <select id="carModel">
+                <option value="">Choose your car</option>
+
+                <optgroup label="Maruti Suzuki">
+                    <option>Maruti Swift</option>
+                    <option>Maruti Baleno</option>
+                    <option>Maruti WagonR</option>
+                    <option>Maruti Brezza</option>
+                    <option>Maruti Dzire</option>
+                    <option>Maruti Ertiga</option>
+                    <option>Maruti Fronx</option>
+                    <option>Maruti Grand Vitara</option>
+                </optgroup>
+
+                <optgroup label="Hyundai">
+                    <option>Hyundai Creta</option>
+                    <option>Hyundai Venue</option>
+                    <option>Hyundai i20</option>
+                    <option>Hyundai Verna</option>
+                    <option>Hyundai Exter</option>
+                    <option>Hyundai i10</option>
+                    <option>Hyundai Aura</option>
+                </optgroup>
+
+                <optgroup label="Tata">
+                    <option>Tata Nexon</option>
+                    <option>Tata Punch</option>
+                    <option>Tata Harrier</option>
+                    <option>Tata Safari</option>
+                    <option>Tata Altroz</option>
+                    <option>Tata Tiago</option>
+                </optgroup>
+
+                <optgroup label="Mahindra">
+                    <option>Mahindra Thar</option>
+                    <option>Mahindra Scorpio</option>
+                    <option>Mahindra Scorpio N</option>
+                    <option>Mahindra XUV700</option>
+                    <option>Mahindra XUV 3XO</option>
+                </optgroup>
+
+                <optgroup label="Toyota">
+                    <option>Toyota Fortuner</option>
+                    <option>Toyota Innova Crysta</option>
+                    <option>Toyota Hyryder</option>
+                    <option>Toyota Glanza</option>
+                </optgroup>
+
+                <optgroup label="Honda">
+                    <option>Honda City</option>
+                    <option>Honda Amaze</option>
+                    <option>Honda Elevate</option>
+                </optgroup>
+
+                <optgroup label="Other">
+                    <option>Other / Different Car</option>
+                </optgroup>
+            </select>
+        </div>
+
+
+        <!-- SERVICE -->
+        <div class="field">
+
+            <label>What service do you need?</label>
+
+            <div class="services">
+
+                <button type="button"
+                        class="service-btn"
+                        data-service="Denting"
+                        onclick="selectService(this)">
+                    🔨 Denting
+                </button>
+
+                <button type="button"
+                        class="service-btn"
+                        data-service="Painting"
+                        onclick="selectService(this)">
+                    🎨 Painting
+                </button>
+
+                <button type="button"
+                        class="service-btn"
+                        data-service="Scratch Repair"
+                        onclick="selectService(this)">
+                    ✨ Scratch Repair
+                </button>
+
+                <button type="button"
+                        class="service-btn"
+                        data-service="Denting & Painting"
+                        onclick="selectService(this)">
+                    🚗 Both
+                </button>
+
+            </div>
+
+        </div>
+
+
+        <!-- DESCRIPTION -->
+        <div class="field">
+
+            <label for="description">Describe the damage</label>
+
+            <textarea
+                id="description"
+                maxlength="1000"
+                placeholder="Example: Front bumper has a dent and scratches on the left side..."
+                oninput="updateCounter()"></textarea>
+
+            <div class="counter">
+                <span id="counter">0</span>/1000
+            </div>
+
+        </div>
+
+
+        <!-- PHOTO -->
+        <div class="field">
+
+            <label for="photo">Add Damage Photo (Optional)</label>
+
+            <div class="photo-box">
+
+                <input
+                    id="photo"
+                    type="file"
+                    accept="image/*"
+                    onchange="previewPhoto(event)">
+
+                <img id="preview" alt="Damage preview">
+
+            </div>
+
+        </div>
+
+
+        <button
+            id="submitBtn"
+            class="submit-btn"
+            onclick="submitEnquiry()">
+
+            Send Enquiry
+        </button>
+
+
+        <div class="quick-contact">
+
+            <!-- Replace the phone number if required -->
+            <a
+                class="contact-btn"
+                href="tel:+918979111277">
+                📞 Call
+            </a>
+
+            <!-- Replace the WhatsApp number if required -->
+            <a
+                class="contact-btn"
+                href="https://wa.me/918979111277"
+                target="_blank">
+                💬 WhatsApp
+            </a>
+
+        </div>
+
+
+        <div class="info">
+            Shahrukh Auto Care<br>
+            Professional car denting, painting & repair services
+        </div>
+
+    </div>
+
+</main>
+
+
+<footer>
+    © 2026 Shahrukh Auto Care
+</footer>
+
+
+<script>
+
+    let selectedService = "";
+
+    // Select service
+    function selectService(button) {
+
+        document.querySelectorAll(".service-btn")
+            .forEach(btn => btn.classList.remove("active"));
+
+        button.classList.add("active");
+
+        selectedService = button.dataset.service;
+    }
+
+
+    // Character counter
+    function updateCounter() {
+
+        const description =
+            document.getElementById("description");
+
+        document.getElementById("counter").textContent =
+            description.value.length;
+    }
+
+
+    // Image preview
+    function previewPhoto(event) {
+
+        const file = event.target.files[0];
+
+        const preview =
+            document.getElementById("preview");
+
+        if (!file) {
+
+            preview.style.display = "none";
+            preview.src = "";
+
+            return;
+        }
+
+        if (!file.type.startsWith("image/")) {
+
+            showStatus(
+                "Please select an image file.",
+                false
+            );
+
+            event.target.value = "";
+
+            return;
+        }
+
+        const reader = new FileReader();
+
+        reader.onload = function(e) {
+
+            preview.src = e.target.result;
+            preview.style.display = "block";
+        };
+
+        reader.readAsDataURL(file);
+    }
+
+
+    // Show status message
+    function showStatus(message, success) {
+
+        const status =
+            document.getElementById("status");
+
+        status.textContent = message;
+
+        status.className =
+            success
+                ? "status success"
+                : "status error";
+
+        status.scrollIntoView({
+            behavior: "smooth",
+            block: "center"
+        });
+    }
+
+
+    // Submit enquiry to Spring Boot
+    async function submitEnquiry() {
+
+        const carModel =
+            document.getElementById("carModel").value;
+
+        const description =
+            document.getElementById("description").value.trim();
+
+        const photoInput =
+            document.getElementById("photo");
+
+        const submitBtn =
+            document.getElementById("submitBtn");
+
+
+        // Validation
+        if (!carModel) {
+
+            showStatus(
+                "Please select your car.",
+                false
+            );
+
+            return;
+        }
+
+
+        if (!selectedService) {
+
+            showStatus(
+                "Please select a service.",
+                false
+            );
+
+            return;
+        }
+
+
+        if (!description) {
+
+            showStatus(
+                "Please describe the damage.",
+                false
+            );
+
+            return;
+        }
+
+
+        // Photo filename only.
+        // The current backend stores the filename,
+        // not the actual image file.
+        let photoName = "";
+
+        if (photoInput.files.length > 0) {
+
+            photoName =
+                photoInput.files[0].name;
+        }
+
+
+        const requestData = {
+
+            carModel: carModel,
+
+            serviceType: selectedService,
+
+            description: description,
+
+            photoName: photoName
+        };
+
+
+        try {
+
+            submitBtn.disabled = true;
+
+            submitBtn.textContent =
+                "Sending Enquiry...";
+
+
+            const response =
+                await fetch("/api/queries", {
+
+                    method: "POST",
+
+                    headers: {
+                        "Content-Type":
+                            "application/json"
+                    },
+
+                    body:
+                        JSON.stringify(requestData)
+                });
+
+
+            if (!response.ok) {
+
+                let errorMessage =
+                    "Unable to submit enquiry.";
+
+                try {
+
+                    const error =
+                        await response.json();
+
+                    if (error.message) {
+                        errorMessage =
+                            error.message;
+                    }
+
+                } catch (e) {
+                    // Ignore JSON parsing error
+                }
+
+                throw new Error(errorMessage);
+            }
+
+
+            // Successful submission
+            showStatus(
+                "✓ Your enquiry has been submitted successfully. We will contact you soon.",
+                true
+            );
+
+
+            // Clear form
+            document.getElementById("carModel").value = "";
+
+            document.getElementById("description").value = "";
+
+            document.getElementById("photo").value = "";
+
+            document.getElementById("preview").style.display = "none";
+
+            document.getElementById("preview").src = "";
+
+            document.getElementById("counter").textContent = "0";
+
+
+            document.querySelectorAll(".service-btn")
+                .forEach(btn =>
+                    btn.classList.remove("active")
+                );
+
+            selectedService = "";
+
+
+        } catch (error) {
+
+            console.error(error);
+
+            showStatus(
+                error.message ||
+                "Something went wrong. Please try again.",
+                false
+            );
+
+        } finally {
+
+            submitBtn.disabled = false;
+
+            submitBtn.textContent =
+                "Send Enquiry";
+        }
+    }
+
+</script>
+
+</body>
+</html>
